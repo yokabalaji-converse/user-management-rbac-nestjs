@@ -1,6 +1,7 @@
 import {
   ForbiddenException,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { LoginDto } from './dtos/login-dtos';
@@ -10,6 +11,8 @@ import { User } from 'src/entities/user.entity';
 import { jwtConstants } from 'src/constants/jwtConstants';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { EmailService } from 'src/email/email.service';
+import * as crypto from 'crypto';
 
 @Injectable()
 export class AuthenticationService {
@@ -17,6 +20,7 @@ export class AuthenticationService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
     private jwtService: JwtService,
+    private readonly emailService: EmailService,
   ) {}
 
   async login(loginDto: LoginDto) {
@@ -65,5 +69,52 @@ export class AuthenticationService {
     } else {
       throw new ForbiddenException('access denies');
     }
+  }
+
+  async sendResetLink(email: string): Promise<string> {
+    const user = await this.usersRepository.findOne({
+      where: { email: email },
+    });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const token = crypto.randomBytes(32).toString('hex');
+    user.resetToken = token;
+    user.tokenExpiry = new Date(Date.now() + 60 * 60 * 1000); // Token expires in 1 hour
+
+    await this.usersRepository.save(user);
+
+    const resetLink = `http://localhost:3000/authentication/reset-password?token=${token}`;
+
+    await this.emailService.sendMail(
+      user.email,
+      'Reset Password',
+      `Click here to reset your password: ${resetLink}`,
+    );
+
+    return 'password reset link is send your email please check your email ';
+  }
+
+  async validateToken(token: string): Promise<User> {
+    const user = await this.usersRepository.findOne({
+      where: { resetToken: token },
+    });
+    if (!user || user.tokenExpiry < new Date()) {
+      throw new NotFoundException('Invalid or expired token');
+    }
+    return user;
+  }
+
+  async resetPassword(token: string, newPassword: string): Promise<string> {
+    const user = await this.validateToken(token);
+
+    user.password = await bcrypt.hash(newPassword, 10);
+    user.resetToken = null;
+    user.tokenExpiry = null;
+
+    await this.usersRepository.save(user);
+
+    return 'your password is reseted';
   }
 }

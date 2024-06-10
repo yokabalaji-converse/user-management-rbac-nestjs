@@ -7,6 +7,7 @@ import { User } from './entities/user.entity';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './guards/jwt-auth-guard';
+import { EmailModule } from './email/email.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { JwtAuthGuard } from './guards/jwt-auth-guard';
     }),
     UserModule,
     AuthenticationModule,
+    EmailModule,
   ],
   controllers: [AppController],
   providers: [

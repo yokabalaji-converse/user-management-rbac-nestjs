@@ -8,6 +8,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from 'src/stratigies/jwt.strategies';
 import { RtStrategy } from 'src/stratigies/rt-strategies';
+import { EmailModule } from 'src/email/email.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { RtStrategy } from 'src/stratigies/rt-strategies';
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '1h' },
     }),
+    EmailModule,
   ],
   controllers: [AuthenticationController],
   providers: [AuthenticationService, JwtStrategy, RtStrategy],
