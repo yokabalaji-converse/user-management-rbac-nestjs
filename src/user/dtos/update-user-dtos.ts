@@ -12,4 +12,7 @@ export class UpdateUserDto {
 
   @IsString()
   confirmPassword: string;
+
+  @IsString()
+  role: string;
 }

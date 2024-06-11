@@ -12,12 +12,14 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dtos/create-user-dtos';
 import * as bcrypt from 'bcrypt';
 import { UpdateUserDto } from './dtos/update-user-dtos';
+import { RoleService } from 'src/role/role.service';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+    private roleService: RoleService,
   ) {}
 
   async createUser(createUserdto: CreateUserDto) {
@@ -36,13 +38,27 @@ export class UserService {
     createUserdto.password = await bcrypt.hash(createUserdto.password, 10);
     const { confirmPassword, ...updateData } = createUserdto;
     console.log(confirmPassword);
-    return this.usersRepository.save(updateData);
+
+    const userRoleId = await this.roleService.getRoleId(createUserdto.role);
+    const user = new User();
+    user.email = updateData.email;
+    user.name = updateData.name;
+    user.password = updateData.password;
+    user.role = userRoleId;
+    return this.usersRepository.save(user);
   }
 
   async update(
     @Param('userId', ParseIntPipe) userId: number,
     @Body() updateUserDto: UpdateUserDto,
   ) {
+    const existingUser = await this.usersRepository.findOne({
+      where: { email: updateUserDto.email },
+    });
+
+    if (existingUser) {
+      throw new ConflictException('Email already exists');
+    }
     if (updateUserDto.password !== updateUserDto.confirmPassword) {
       throw new BadRequestException('Passwords do not match');
     }
@@ -50,7 +66,13 @@ export class UserService {
     updateUserDto.password = await bcrypt.hash(updateUserDto.password, 10);
     const { confirmPassword, ...updateData } = updateUserDto;
     console.log(confirmPassword);
-    return this.usersRepository.update(userId, updateData);
+    const userRoleId = await this.roleService.getRoleId(updateUserDto.role);
+    const user = new User();
+    user.email = updateData.email;
+    user.name = updateData.name;
+    user.password = updateData.password;
+    user.role = userRoleId;
+    return this.usersRepository.update(userId, user);
   }
 
   async getUser(userId: number) {

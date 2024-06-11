@@ -1,11 +1,4 @@
-import {
-  Body,
-  Controller,
-  Post,
-  Query,
-  Request,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Post, Query, UseGuards } from '@nestjs/common';
 import { LoginDto } from './dtos/login-dtos';
 import { AuthenticationService } from './authentication.service';
 import { Public } from 'src/decorators/public-decorator';

@@ -11,4 +11,7 @@ export class CreateUserDto {
 
   @IsString()
   confirmPassword: string;
+
+  @IsString()
+  role:string;
 }

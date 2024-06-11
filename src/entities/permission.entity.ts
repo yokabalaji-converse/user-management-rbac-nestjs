@@ -1,7 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Role } from './role.entity';
 
 @Entity()
-export class User {
+export class Permission {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -13,4 +14,7 @@ export class User {
 
   @Column()
   model: string;
+
+  @ManyToMany(() => Role, (role) => role.permissions) // Many-to-Many relationship
+  roles: Role[];
 }

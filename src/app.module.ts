@@ -8,6 +8,9 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './guards/jwt-auth-guard';
 import { EmailModule } from './email/email.module';
+import { Role } from './entities/role.entity';
+import { Permission } from './entities/permission.entity';
+import { RoleModule } from './role/role.module';
 
 @Module({
   imports: [
@@ -18,12 +21,13 @@ import { EmailModule } from './email/email.module';
       username: 'root',
       password: 'root',
       database: 'usermanagement',
-      entities: [User],
+      entities: [User, Role, Permission],
       synchronize: true,
     }),
     UserModule,
     AuthenticationModule,
     EmailModule,
+    RoleModule,
   ],
   controllers: [AppController],
   providers: [
