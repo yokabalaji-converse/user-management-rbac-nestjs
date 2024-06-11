@@ -2,7 +2,6 @@ import {
   Column,
   Entity,
   ManyToMany,
-  OneToMany,
   PrimaryGeneratedColumn,
   JoinTable,
 } from 'typeorm';
@@ -15,12 +14,12 @@ export class Role {
   id: number;
 
   @Column({ default: 'user' })
-  role: string;
+  name: string;
 
-  @OneToMany(() => User, (user) => user.role) // One role has many users
+  @ManyToMany(() => User, (user) => user.roles)
   users: User[];
 
-  @ManyToMany(() => Permission, (permission) => permission.roles) // Many-to-Many relationship
-  @JoinTable() // Add this line to create the join table
+  @ManyToMany(() => Permission)
+  @JoinTable()
   permissions: Permission[];
 }

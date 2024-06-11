@@ -7,14 +7,11 @@ export class Permission {
   id: number;
 
   @Column()
-  permission: boolean;
-
-  @Column()
   action: string;
 
   @Column()
   model: string;
 
-  @ManyToMany(() => Role, (role) => role.permissions) // Many-to-Many relationship
+  @ManyToMany(() => Role, (role) => role.permissions)
   roles: Role[];
 }

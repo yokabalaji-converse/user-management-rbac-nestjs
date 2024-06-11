@@ -11,6 +11,7 @@ import { EmailModule } from './email/email.module';
 import { Role } from './entities/role.entity';
 import { Permission } from './entities/permission.entity';
 import { RoleModule } from './role/role.module';
+import { PermissionModule } from './permission/permission.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { RoleModule } from './role/role.module';
     AuthenticationModule,
     EmailModule,
     RoleModule,
+    PermissionModule,
   ],
   controllers: [AppController],
   providers: [

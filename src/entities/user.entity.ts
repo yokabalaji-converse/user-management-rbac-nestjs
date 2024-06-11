@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Role } from './role.entity';
 
 @Entity()
@@ -24,6 +30,7 @@ export class User {
   @Column({ nullable: true })
   rToken: string;
 
-  @ManyToOne(() => Role, (role) => role.users) // Many users can have one role
-  role: Role;
+  @ManyToMany(() => Role)
+  @JoinTable()
+  roles: Role[];
 }
