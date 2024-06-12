@@ -5,9 +5,10 @@ import {
   InferSubjects,
   PureAbility,
 } from '@casl/ability';
+
 import { User } from '../entities/user.entity';
-import { Role } from '../entities/role.entity';
 import { Permission } from '../entities/permission.entity';
+import { Role } from '../entities/role.entity';
 
 type Subjects =
   | InferSubjects<typeof User | typeof Role | typeof Permission>
@@ -25,7 +26,21 @@ export function defineAbilitiesFor(user: User) {
   } else {
     user.roles.forEach((role) => {
       role.permissions.forEach((permission) => {
-        can(permission.action, permission.model);
+        let subject: Subjects;
+        switch (permission.model) {
+          case 'user':
+            subject = User;
+            break;
+          case 'permission':
+            subject = Permission;
+            break;
+          case 'role':
+            subject = Role;
+            break;
+          default:
+            throw new Error(`Unknown model: ${permission.model}`);
+        }
+        can(permission.action, subject);
       });
     });
   }

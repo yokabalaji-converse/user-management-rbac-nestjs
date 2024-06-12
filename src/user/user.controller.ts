@@ -12,10 +12,16 @@ import { CreateUserDto } from './dtos/create-user-dtos';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dtos/update-user-dtos';
 import { Public } from 'src/decorators/public-decorator';
+import { RoleService } from 'src/role/role.service';
+import { PermissionService } from 'src/permission/permission.service';
 
 @Controller('user')
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private roleService: RoleService,
+    private permissionService: PermissionService,
+  ) {}
 
   @Public()
   @Post()

@@ -79,9 +79,9 @@ export class AuthenticationService {
       throw new NotFoundException('User not found');
     }
 
-    const token = crypto.randomBytes(32).toString('hex');
+    const token = crypto.randomBytes(4).toString('hex');
     user.resetToken = token;
-    user.tokenExpiry = new Date(Date.now() + 60 * 60 * 1000); // Token expires in 1 hour
+    user.tokenExpiry = new Date(Date.now() + 60 * 1 * 1); // Token expires in 1 hour
 
     await this.usersRepository.save(user);
 

@@ -12,14 +12,15 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dtos/create-user-dtos';
 import * as bcrypt from 'bcrypt';
 import { UpdateUserDto } from './dtos/update-user-dtos';
-import { RoleService } from 'src/role/role.service';
+import { Role } from 'src/entities/role.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
-    private roleService: RoleService,
+    @InjectRepository(Role)
+    private roleRepository: Repository<Role>,
   ) {}
 
   async createUser(createUserdto: CreateUserDto) {
@@ -39,12 +40,12 @@ export class UserService {
     const { confirmPassword, ...updateData } = createUserdto;
     console.log(confirmPassword);
 
-    const userRoleId = await this.roleService.getRoleId(createUserdto.role);
+    const roles = await this.roleRepository.findByIds(createUserdto.role);
     const user = new User();
     user.email = updateData.email;
     user.name = updateData.name;
     user.password = updateData.password;
-    user.role = userRoleId;
+    user.roles = roles;
     return this.usersRepository.save(user);
   }
 
@@ -66,12 +67,12 @@ export class UserService {
     updateUserDto.password = await bcrypt.hash(updateUserDto.password, 10);
     const { confirmPassword, ...updateData } = updateUserDto;
     console.log(confirmPassword);
-    const userRoleId = await this.roleService.getRoleId(updateUserDto.role);
+    const roles = await this.roleRepository.findByIds(updateUserDto.role);
     const user = new User();
     user.email = updateData.email;
     user.name = updateData.name;
     user.password = updateData.password;
-    user.role = userRoleId;
+    user.roles = roles;
     return this.usersRepository.update(userId, user);
   }
 
@@ -85,5 +86,12 @@ export class UserService {
 
   async deleteUser(userId: number) {
     return await this.usersRepository.delete(userId);
+  }
+
+  async findOne(id: number): Promise<User> {
+    return this.usersRepository.findOne({
+      where: { id },
+      relations: ['roles', 'roles.permissions'],
+    });
   }
 }

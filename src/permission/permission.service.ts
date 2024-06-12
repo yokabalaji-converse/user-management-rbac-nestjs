@@ -12,7 +12,15 @@ export class PermissionService {
     private permissionRepo: Repository<Permission>,
   ) {}
   async createPermission(createPermissionDto: CreatePermissionDto) {
-    return await this.permissionRepo.save(createPermissionDto);
+  //  return await this.permissionRepo.save(createPermissionDto);
+
+  const { action, model } = createPermissionDto;
+
+    const permission = new Permission();
+    permission.action = action;
+    permission.model = model;
+
+    return this.permissionRepo.save(permission);
   }
 
   async updatePermission(id: number, updatePermissionDto: UpdatePermissionDto) {
