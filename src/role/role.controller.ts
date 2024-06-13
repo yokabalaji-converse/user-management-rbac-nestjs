@@ -15,6 +15,7 @@ import { CheckPolicies } from 'src/abilities/policies.decorator';
 import { AppAbility } from 'src/abilities/ability';
 import { PermissionService } from 'src/permission/permission.service';
 import { UserService } from 'src/user/user.service';
+import { Public } from 'src/decorators/public-decorator';
 
 @Controller('role')
 export class RoleController {
@@ -23,7 +24,6 @@ export class RoleController {
     private roleService: RoleService,
     private permissionService: PermissionService,
   ) {}
-
 
   @Post()
   @UseGuards(PoliciesGuard)

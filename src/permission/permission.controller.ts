@@ -15,6 +15,7 @@ import { CheckPolicies } from 'src/abilities/policies.decorator';
 import { AppAbility } from 'src/abilities/ability';
 import { RoleService } from 'src/role/role.service';
 import { UserService } from 'src/user/user.service';
+import { Public } from 'src/decorators/public-decorator';
 
 @Controller('permission')
 export class PermissionController {
@@ -23,10 +24,9 @@ export class PermissionController {
     private permissionService: PermissionService,
     private roleService: RoleService,
   ) {}
-
   @Post()
-  @UseGuards(PoliciesGuard)
-  @CheckPolicies((ability: AppAbility) => ability.can('create', 'Permission'))
+  // @UseGuards(PoliciesGuard)
+  // @CheckPolicies((ability: AppAbility) => ability.can('create', 'Permission'))
   async createPermission(@Body() createPermisionDto: CreatePermissionDto) {
     return await this.permissionService.createPermission(createPermisionDto);
   }

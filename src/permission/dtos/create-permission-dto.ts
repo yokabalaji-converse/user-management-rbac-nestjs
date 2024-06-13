@@ -1,9 +1,6 @@
-import { IsBoolean, IsString } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class CreatePermissionDto {
-  @IsBoolean()
-  permission: boolean;
-
   @IsString()
   action: string;
 

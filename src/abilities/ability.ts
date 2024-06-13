@@ -7,12 +7,17 @@ import {
 } from '@casl/ability';
 
 import { User } from '../entities/user.entity';
-import { Permission } from '../entities/permission.entity';
-import { Role } from '../entities/role.entity';
+import { Permission } from 'src/entities/permission.entity';
+import { Role } from 'src/entities/role.entity';
 
 type Subjects =
   | InferSubjects<typeof User | typeof Role | typeof Permission>
-  | 'all';
+  | 'all'
+  | 'Permission'
+  | 'Role'
+  | 'User';
+
+console.log('ability class');
 
 export type AppAbility = PureAbility<[string, Subjects]>;
 
@@ -21,27 +26,32 @@ export function defineAbilitiesFor(user: User) {
     PureAbility as AbilityClass<AppAbility>,
   );
 
-  if (user.roles.some((role) => role.name === 'admin')) {
+  if (user && user.roles && user.roles.some((role) => role.name === 'admin')) {
     can('manage', 'all'); // Admin can manage everything
-  } else {
+  } else if (user && user.roles) {
     user.roles.forEach((role) => {
-      role.permissions.forEach((permission) => {
-        let subject: Subjects;
-        switch (permission.model) {
-          case 'user':
-            subject = User;
-            break;
-          case 'permission':
-            subject = Permission;
-            break;
-          case 'role':
-            subject = Role;
-            break;
-          default:
-            throw new Error(`Unknown model: ${permission.model}`);
-        }
-        can(permission.action, subject);
-      });
+      if (role.permissions) {
+        role.permissions.forEach((permission) => {
+          // Assuming permission.model is a string that corresponds to an entity name
+          let subject: Subjects;
+          switch (permission.model) {
+            case 'User':
+              subject = User;
+              break;
+            case 'Permission':
+              subject = Permission;
+              break;
+            case 'Role':
+              subject = Role;
+              break;
+            default:
+              console.log('model mistakes  ');
+              throw new Error(`Unknown model: ${permission.model}`);
+              break;
+          }
+          can(permission.action, subject);
+        });
+      }
     });
   }
 
