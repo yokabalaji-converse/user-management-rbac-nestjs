@@ -35,13 +35,13 @@ export function defineAbilitiesFor(user: User) {
           // Assuming permission.model is a string that corresponds to an entity name
           let subject: Subjects;
           switch (permission.model) {
-            case 'User':
+            case 'user':
               subject = User;
               break;
-            case 'Permission':
+            case 'permission':
               subject = Permission;
               break;
-            case 'Role':
+            case 'role':
               subject = Role;
               break;
             default:

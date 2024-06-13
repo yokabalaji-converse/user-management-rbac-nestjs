@@ -17,6 +17,7 @@ import { PermissionService } from 'src/permission/permission.service';
 import { UserService } from 'src/user/user.service';
 import { Public } from 'src/decorators/public-decorator';
 
+
 @Controller('role')
 export class RoleController {
   constructor(
