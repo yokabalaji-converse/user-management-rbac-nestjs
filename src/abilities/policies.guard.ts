@@ -29,7 +29,7 @@ export class PoliciesGuard implements CanActivate {
         CHECK_POLICIES_KEY,
         context.getHandler(),
       ) || [];
-    //console.log(policyHandlers);
+    console.log('plkljkl' + policyHandlers);
 
     const request = context.switchToHttp().getRequest();
     const users = request.user as User;
