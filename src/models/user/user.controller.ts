@@ -11,9 +11,9 @@ import {
 import { CreateUserDto } from './dtos/create-user-dtos';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dtos/update-user-dtos';
-import { Public } from 'src/decorators/public-decorator';
-import { RoleService } from 'src/role/role.service';
-import { PermissionService } from 'src/permission/permission.service';
+import { Public } from 'src/common/decorators/public-decorator';
+import { RoleService } from 'src/models/role/role.service';
+import { PermissionService } from 'src/models/permission/permission.service';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 
 @Controller('user')
@@ -50,7 +50,7 @@ export class UserController {
   getAll() {
     return this.userService.getAll();
   }
-  
+
   @ApiSecurity('jwt-auth')
   @Delete(':userId')
   deleteUserId(@Param('userId', ParseIntPipe) userId: number) {

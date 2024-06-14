@@ -6,9 +6,9 @@ import {
   PureAbility,
 } from '@casl/ability';
 
-import { User } from '../entities/user.entity';
-import { Permission } from 'src/entities/permission.entity';
-import { Role } from 'src/entities/role.entity';
+import { User } from '../../models/user/entities/user.entity';
+import { Permission } from 'src/models/permission/entities/permission.entity';
+import { Role } from 'src/models/role/entities/role.entity';
 
 type Subjects =
   | InferSubjects<typeof User | typeof Role | typeof Permission>

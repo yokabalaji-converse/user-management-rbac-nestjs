@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { defineAbilitiesFor, AppAbility } from '../abilities/ability';
-import { User } from '../entities/user.entity';
+import { defineAbilitiesFor, AppAbility } from './ability';
+import { User } from '../../models/user/entities/user.entity';
 
 @Injectable()
 export class CaslAbilityFactory {

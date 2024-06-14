@@ -4,8 +4,8 @@ import { CaslAbilityFactory } from './casl-ability-factory';
 import { CHECK_POLICIES_KEY } from './policies.decorator';
 import { PolicyHandler } from './policy-handler.interface';
 import { AppAbility } from './ability';
-import { User } from '../entities/user.entity';
-import { UserService } from 'src/user/user.service';
+import { User } from '../../models/user/entities/user.entity';
+import { UserService } from 'src/models/user/user.service';
 
 @Injectable()
 export class PoliciesGuard implements CanActivate {

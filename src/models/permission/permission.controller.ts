@@ -11,11 +11,11 @@ import {
 import { PermissionService } from './permission.service';
 import { CreatePermissionDto } from './dtos/create-permission-dto';
 import { UpdatePermissionDto } from './dtos/update-permission-dto';
-import { PoliciesGuard } from 'src/abilities/policies.guard';
-import { CheckPolicies } from 'src/abilities/policies.decorator';
-import { AppAbility } from 'src/abilities/ability';
-import { RoleService } from 'src/role/role.service';
-import { UserService } from 'src/user/user.service';
+import { PoliciesGuard } from 'src/common/abilities/policies.guard';
+import { CheckPolicies } from 'src/common/abilities/policies.decorator';
+import { AppAbility } from 'src/common/abilities/ability';
+import { RoleService } from 'src/models/role/role.service';
+import { UserService } from 'src/models/user/user.service';
 //import { Public } from 'src/decorators/public-decorator';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 

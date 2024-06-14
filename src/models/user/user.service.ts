@@ -8,12 +8,12 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/entities/user.entity';
+import { User } from 'src/models/user/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dtos/create-user-dtos';
 import * as bcrypt from 'bcrypt';
 import { UpdateUserDto } from './dtos/update-user-dtos';
-import { Role } from 'src/entities/role.entity';
+import { Role } from 'src/models/role/entities/role.entity';
 
 @Injectable()
 export class UserService {

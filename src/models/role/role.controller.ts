@@ -10,11 +10,11 @@ import {
 } from '@nestjs/common';
 import { CreateRoleDto } from './dtos/create-role-dto';
 import { RoleService } from './role.service';
-import { PoliciesGuard } from 'src/abilities/policies.guard';
-import { CheckPolicies } from 'src/abilities/policies.decorator';
-import { AppAbility } from 'src/abilities/ability';
-import { PermissionService } from 'src/permission/permission.service';
-import { UserService } from 'src/user/user.service';
+import { PoliciesGuard } from 'src/common/abilities/policies.guard';
+import { CheckPolicies } from 'src/common/abilities/policies.decorator';
+import { AppAbility } from 'src/common/abilities/ability';
+import { PermissionService } from 'src/models/permission/permission.service';
+import { UserService } from 'src/models/user/user.service';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 
 @Controller('role')
