@@ -30,7 +30,7 @@ export class User {
   @Column({ nullable: true })
   rToken: string;
 
-  @ManyToMany(() => Role)
+  @ManyToMany(() => Role, { cascade: true })
   @JoinTable()
   roles: Role[];
 }

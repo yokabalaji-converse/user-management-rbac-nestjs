@@ -12,9 +12,9 @@ export class PermissionService {
     private permissionRepo: Repository<Permission>,
   ) {}
   async createPermission(createPermissionDto: CreatePermissionDto) {
-  //  return await this.permissionRepo.save(createPermissionDto);
+    //  return await this.permissionRepo.save(createPermissionDto);
 
-  const { action, model } = createPermissionDto;
+    const { action, model } = createPermissionDto;
 
     const permission = new Permission();
     permission.action = action;
@@ -25,5 +25,9 @@ export class PermissionService {
 
   async updatePermission(id: number, updatePermissionDto: UpdatePermissionDto) {
     return await this.permissionRepo.update(id, updatePermissionDto);
+  }
+
+  async deletePermission(id: number) {
+    return await this.permissionRepo.delete(id);
   }
 }

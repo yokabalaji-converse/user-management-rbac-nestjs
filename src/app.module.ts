@@ -12,9 +12,11 @@ import { Role } from './entities/role.entity';
 import { Permission } from './entities/permission.entity';
 import { RoleModule } from './role/role.module';
 import { PermissionModule } from './permission/permission.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',

@@ -3,6 +3,7 @@ import {
   Body,
   ConflictException,
   Injectable,
+  NotFoundException,
   Param,
   ParseIntPipe,
 } from '@nestjs/common';
@@ -53,6 +54,7 @@ export class UserService {
     @Param('userId', ParseIntPipe) userId: number,
     @Body() updateUserDto: UpdateUserDto,
   ) {
+    const id = userId;
     const existingUser = await this.usersRepository.findOne({
       where: { email: updateUserDto.email },
     });
@@ -65,23 +67,37 @@ export class UserService {
     }
 
     updateUserDto.password = await bcrypt.hash(updateUserDto.password, 10);
-    const { confirmPassword, ...updateData } = updateUserDto;
+    const { confirmPassword, role: roleIds, ...updateData } = updateUserDto;
     console.log(confirmPassword);
-    const roles = await this.roleRepository.findByIds(updateUserDto.role);
-    const user = new User();
+    const roles = await this.roleRepository.findByIds(roleIds);
+    const user = await this.usersRepository.findOneById(id);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    user.roles = await this.usersRepository
+      .createQueryBuilder()
+      .relation(User, 'roles')
+      .of(user)
+      .loadMany();
+
     user.email = updateData.email;
     user.name = updateData.name;
     user.password = updateData.password;
     user.roles = roles;
-    return this.usersRepository.update(userId, user);
+    return await this.usersRepository.save(user);
   }
 
   async getUser(userId: number) {
-    return await this.usersRepository.findOne({ where: { id: userId } });
+    return await this.usersRepository.findOne({
+      where: { id: userId },
+      relations: ['roles', 'roles.permissions'],
+    });
   }
 
   async getAll(): Promise<User[]> {
-    return await this.usersRepository.find();
+    return await this.usersRepository.find({
+      relations: ['roles', 'roles.permissions'],
+    });
   }
 
   async deleteUser(userId: number) {

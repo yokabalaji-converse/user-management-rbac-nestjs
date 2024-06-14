@@ -5,8 +5,10 @@ import { Public } from 'src/decorators/public-decorator';
 import { RtAuthGuard } from 'src/guards/rt-jwt-guard';
 import { GetCurrentUser } from 'src/decorators/rt-get-current-user-deco';
 import { GetCurrentUserId } from 'src/decorators/rt-get-current-userId-deco';
+import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 
 @Controller('authentication')
+@ApiTags('Authentication')
 export class AuthenticationController {
   constructor(private authService: AuthenticationService) {}
 
@@ -18,6 +20,7 @@ export class AuthenticationController {
 
   @Public()
   @UseGuards(RtAuthGuard)
+  @ApiSecurity('jwt-auth')
   @Post('refresh')
   async refreshToken(
     @GetCurrentUserId() userId: number,
