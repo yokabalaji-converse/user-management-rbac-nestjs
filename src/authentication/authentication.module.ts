@@ -7,7 +7,7 @@ import { jwtConstants } from 'src/common/constants/jwtConstants';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from 'src/authentication/stratigies/jwt.strategies';
-import { RtStrategy } from 'src/authentication/stratigies/rt-strategies';
+import { RtStrategy } from 'src/authentication/stratigies/refreshToken-strategies';
 import { EmailModule } from 'src/email/email.module';
 
 @Module({

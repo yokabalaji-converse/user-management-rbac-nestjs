@@ -4,7 +4,7 @@ import { ForbiddenException, Injectable } from '@nestjs/common';
 import { jwtConstants } from '../../common/constants/jwtConstants';
 import { Request } from 'express';
 import { JwtPayload } from '../../common/types/jwt-payload-types';
-import { JwtPayloadWithRt } from '../../common/types/jwt-payload-with-rt-type';
+import { JwtPayloadWithRt } from '../../common/types/jwt-payload-with-refreshtoken-type';
 
 @Injectable()
 export class RtStrategy extends PassportStrategy(Strategy, 'jwt-refresh') {

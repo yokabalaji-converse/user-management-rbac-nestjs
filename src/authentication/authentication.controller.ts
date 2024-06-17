@@ -2,9 +2,9 @@ import { Body, Controller, Post, Query, UseGuards } from '@nestjs/common';
 import { LoginDto } from './dtos/login-dtos';
 import { AuthenticationService } from './authentication.service';
 import { Public } from 'src/common/decorators/public-decorator';
-import { RtAuthGuard } from 'src/common/guards/rt-jwt-guard';
-import { GetCurrentUser } from 'src/common/decorators/rt-get-current-user-deco';
-import { GetCurrentUserId } from 'src/common/decorators/rt-get-current-userId-deco';
+import { RtAuthGuard } from 'src/common/guards/refreshToken-jwt-guard';
+import { GetCurrentUser } from 'src/common/decorators/refreshToken-get-current-user-deco';
+import { GetCurrentUserId } from 'src/common/decorators/refreshToken-get-current-userId-deco';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 
 @Controller('authentication')
