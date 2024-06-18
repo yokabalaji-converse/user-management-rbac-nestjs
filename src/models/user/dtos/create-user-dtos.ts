@@ -19,5 +19,5 @@ export class CreateUserDto {
 
   @ApiProperty()
   @IsArray()
-  role: number[];
+  role: string[];
 }

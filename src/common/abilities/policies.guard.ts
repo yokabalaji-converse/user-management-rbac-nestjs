@@ -1,6 +1,6 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { CaslAbilityFactory } from './common-ability-schema-language-factory';
+import { CaslAbilityFactory } from './conditional-access-control-library-factory';
 import { CHECK_POLICIES_KEY } from './policies.decorator';
 import { PolicyHandler } from './policy-handler.interface';
 import { AppAbility } from './ability';
@@ -21,31 +21,35 @@ export class PoliciesGuard implements CanActivate {
         CHECK_POLICIES_KEY,
         context.getHandler(),
       ) || [];
-    console.log('plkljkl' + policyHandlers);
+    console.log('policy hanlder   ' + policyHandlers);
 
     const request = context.switchToHttp().getRequest();
     const users = request.user as User;
-    console.log(users);
+    console.log('User payload from request:   ', users);
     const user = await this.userService.findOne(users['userId']);
+    if (!user) {
+      console.log('User not found');
+      return false;
+    }
+    console.log('Fetched user:   ', user);
+    const ability = this.caslAbilityFactory.createUserAbilityForUser(user);
+    console.log('Generated ability:    ', ability);
 
-    console.log(user);
-    const ability = this.caslAbilityFactory.createForUser(user);
-    console.log(this.caslAbilityFactory);
-
-    return policyHandlers.every((handler) =>
+    const result = policyHandlers.every((handler) =>
       this.execPolicyHandler(handler, ability),
     );
+    console.log('Policy check result:   ', result);
+    return result;
   }
 
   private execPolicyHandler(handler: PolicyHandler, ability: AppAbility) {
     if (typeof handler === 'function') {
-      console.log('polices ability 1');
-
-      console.log(handler(ability));
-
-      return handler(ability);
+      const result = handler(ability);
+      console.log('Policy handler function result:   ', result);
+      return result;
     }
-    console.log('polices ability 2');
-    return handler.handle(ability);
+    const result = handler.handle(ability);
+    console.log('Policy handler object result:    ', result);
+    return result;
   }
 }

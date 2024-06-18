@@ -41,13 +41,18 @@ export class UserService {
     const { confirmPassword, ...updateData } = createUserdto;
     console.log(confirmPassword);
 
-    const roles = await this.roleRepository.findByIds(createUserdto.role);
+    const roless = await createUserdto.role.map((role) => ({
+      name: role,
+    }));
+
+    const roles = await this.roleRepository.find({ where: roless });
+
     const user = new User();
     user.email = updateData.email;
     user.name = updateData.name;
     user.password = updateData.password;
     user.roles = roles;
-    return this.usersRepository.save(user);
+    return await this.usersRepository.save(user);
   }
 
   async update(
@@ -105,9 +110,21 @@ export class UserService {
   }
 
   async findOne(id: number): Promise<User> {
-    return this.usersRepository.findOne({
-      where: { id },
-      relations: ['roles', 'roles.permissions'],
-    });
+    try {
+      //  console.log(`Fetching user with id: ${id}`);
+      const user = await this.usersRepository.findOne({
+        where: { id },
+        relations: ['roles', 'roles.permissions'],
+      });
+      if (!user) {
+        //    console.error('User not found');
+        return null;
+      }
+      //   console.log('Fetched user:', user);
+      return user;
+    } catch (error) {
+      //   console.error('Error fetching user:', error);
+      throw error;
+    }
   }
 }

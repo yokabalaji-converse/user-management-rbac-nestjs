@@ -31,7 +31,7 @@ export class PermissionController {
   @ApiSecurity('jwt-auth')
   @Post()
   @UseGuards(PoliciesGuard)
-  @CheckPolicies((ability: AppAbility) => ability.can('create', 'Permission'))
+ // @CheckPolicies((ability: AppAbility) => ability.can('create', 'Permission'))
   async createPermission(@Body() createPermisionDto: CreatePermissionDto) {
     return await this.permissionService.createPermission(createPermisionDto);
   }

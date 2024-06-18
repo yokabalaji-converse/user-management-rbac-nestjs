@@ -47,7 +47,6 @@ export function defineAbilitiesFor(user: User) {
             default:
               console.log('model mistakes  ');
               throw new Error(`Unknown model: ${permission.model}`);
-              break;
           }
           can(permission.action, subject);
         });

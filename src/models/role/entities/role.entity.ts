@@ -16,10 +16,24 @@ export class Role {
   @Column({ default: 'user' })
   name: string;
 
-  @ManyToMany(() => User, (user) => user.roles)
-  users: User[];
+  // @ManyToMany(() => User, (user) => user.roles)
+  // users: User[];
 
-  @ManyToMany(() => Permission, { cascade: true })
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
+
+  @Column({ type: 'timestamp', nullable: true, onUpdate: 'CURRENT_TIMESTAMP' })
+  updatedAt: Date;
+
+  @Column({ type: 'timestamp', nullable: true })
+  deletedAt: Date;
+
+  @ManyToMany(() => Permission, (permission) => permission.roles, {
+    cascade: true,
+  })
   @JoinTable()
   permissions: Permission[];
+
+  @ManyToMany(() => User, (user) => user.roles)
+  users: User[];
 }

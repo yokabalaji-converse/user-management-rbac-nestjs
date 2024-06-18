@@ -30,7 +30,16 @@ export class User {
   @Column({ nullable: true })
   rToken: string;
 
-  @ManyToMany(() => Role, { cascade: true })
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
+
+  @Column({ type: 'timestamp', nullable: true, onUpdate: 'CURRENT_TIMESTAMP' })
+  updatedAt: Date;
+
+  @Column({ type: 'timestamp', nullable: true })
+  deletedAt: Date;
+
+  @ManyToMany(() => Role, (role) => role.users, { cascade: true })
   @JoinTable()
   roles: Role[];
 }

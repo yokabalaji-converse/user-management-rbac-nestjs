@@ -12,6 +12,15 @@ export class Permission {
   @Column()
   model: string;
 
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
+
+  @Column({ type: 'timestamp', nullable: true, onUpdate: 'CURRENT_TIMESTAMP' })
+  updatedAt: Date;
+
+  @Column({ type: 'timestamp', nullable: true })
+  deletedAt: Date;
+
   @ManyToMany(() => Role, (role) => role.permissions)
   roles: Role[];
 }

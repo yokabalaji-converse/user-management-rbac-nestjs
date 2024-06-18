@@ -8,5 +8,6 @@ export class CreateRoleDto {
 
   @ApiProperty()
   @IsArray()
-  permissionIds: number[];
+  // permissionIds: number[];
+  permissions: { action: string; model: string }[];
 }

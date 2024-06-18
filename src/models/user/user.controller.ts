@@ -42,7 +42,8 @@ export class UserController {
   @ApiSecurity('jwt-auth')
   @Get('/:userId')
   getId(@Param('userId', ParseIntPipe) userId: number) {
-    return this.userService.getUser(userId);
+    // return this.userService.getUser(userId);
+    return this.userService.findOne(userId);
   }
 
   @ApiSecurity('jwt-auth')

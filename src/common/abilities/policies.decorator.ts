@@ -1,5 +1,3 @@
-// src/abilities/policies.decorator.ts
-
 import { SetMetadata } from '@nestjs/common';
 import { PolicyHandler } from './policy-handler.interface';
 

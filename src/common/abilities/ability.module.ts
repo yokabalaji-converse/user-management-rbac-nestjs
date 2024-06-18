@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { CaslAbilityFactory } from './common-ability-schema-language-factory';
+import { CaslAbilityFactory } from './conditional-access-control-library-factory';
 
 @Module({
   providers: [CaslAbilityFactory],
