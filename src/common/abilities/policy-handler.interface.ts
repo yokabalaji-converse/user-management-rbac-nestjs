@@ -1,5 +1,3 @@
-// src/abilities/policy-handler.interface.ts
-
 import { AppAbility } from './ability';
 
 export type PolicyHandlerCallback = (

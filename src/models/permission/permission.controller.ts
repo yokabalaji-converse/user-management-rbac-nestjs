@@ -6,14 +6,10 @@ import {
   ParseIntPipe,
   Post,
   Put,
-  UseGuards,
 } from '@nestjs/common';
 import { PermissionService } from './permission.service';
 import { CreatePermissionDto } from './dtos/create-permission-dto';
 import { UpdatePermissionDto } from './dtos/update-permission-dto';
-import { PoliciesGuard } from 'src/common/abilities/policies.guard';
-import { CheckPolicies } from 'src/common/abilities/policies.decorator';
-import { AppAbility } from 'src/common/abilities/ability';
 import { RoleService } from 'src/models/role/role.service';
 import { UserService } from 'src/models/user/user.service';
 //import { Public } from 'src/decorators/public-decorator';
@@ -30,8 +26,6 @@ export class PermissionController {
 
   @ApiSecurity('jwt-auth')
   @Post()
-  @UseGuards(PoliciesGuard)
- // @CheckPolicies((ability: AppAbility) => ability.can('create', 'Permission'))
   async createPermission(@Body() createPermisionDto: CreatePermissionDto) {
     return await this.permissionService.createPermission(createPermisionDto);
   }

@@ -20,5 +20,5 @@ export class UpdateUserDto {
 
   @ApiProperty()
   @IsArray()
-  role: number[];
+  role: string[];
 }

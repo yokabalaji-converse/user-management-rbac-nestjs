@@ -15,8 +15,8 @@ export class EmailService {
     this.transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'tigo1515007@gmail.com', // replace with your email
-        pass: 'qrio ljiy etzs crpx', // replace with your email password
+        user: 'tigo1515007@gmail.com',
+        pass: 'qrio ljiy etzs crpx',
       },
     });
   }
@@ -24,9 +24,9 @@ export class EmailService {
   async sendMail(to: string, subject: string, text: string) {
     await this.transporter.sendMail({
       from: 'tigo1515007@gmail.com', // sender address
-      to, // list of receivers
-      subject, // Subject line
-      text, // plain text body
+      to,
+      subject,
+      text,
     });
   }
 

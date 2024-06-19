@@ -15,19 +15,6 @@ export class RoleService {
   ) {}
 
   async createRole(createRoleDto: CreateRoleDto) {
-    //if you give the permissionIds use this code
-
-    // const { name, permissionIds } = createRoleDto;
-
-    // const permissions =
-    //   await this.permissionRepository.findByIds(permissionIds);
-
-    // const role = new Role();
-    // role.name = name;
-    // role.permissions = permissions;
-
-    // return this.roleRepository.save(role);
-
     const { name, permissions } = createRoleDto;
 
     const checkRole = await this.roleRepository.findOne({
@@ -35,7 +22,6 @@ export class RoleService {
     });
     console.log(checkRole);
     if (checkRole) {
-      // Create an array of conditions for the query
       throw new ConflictException('This user already exists');
     } else {
       const permissionConditions = await permissions.map(
@@ -45,18 +31,14 @@ export class RoleService {
         }),
       );
 
-      // Find permissions by their actions and models
       const permissionEntities = await this.permissionRepository.find({
         where: permissionConditions,
       });
       console.log(permissionEntities);
-      // Create a new role with associated permissions
       const role = await this.roleRepository.create({
         name,
         permissions: permissionEntities,
       });
-
-      // Save the new role to the database
       return await this.roleRepository.save(role);
     }
   }

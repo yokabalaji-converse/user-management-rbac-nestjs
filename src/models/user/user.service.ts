@@ -40,13 +40,14 @@ export class UserService {
     createUserdto.password = await bcrypt.hash(createUserdto.password, 10);
     const { confirmPassword, ...updateData } = createUserdto;
     console.log(confirmPassword);
-
     const roless = await createUserdto.role.map((role) => ({
       name: role,
     }));
 
     const roles = await this.roleRepository.find({ where: roless });
-
+    if (!roles) {
+      return 'This role is not Available';
+    }
     const user = new User();
     user.email = updateData.email;
     user.name = updateData.name;
@@ -60,12 +61,13 @@ export class UserService {
     @Body() updateUserDto: UpdateUserDto,
   ) {
     const id = userId;
-    const existingUser = await this.usersRepository.findOne({
-      where: { email: updateUserDto.email },
-    });
+    const roless = await updateUserDto.role.map((role) => ({
+      name: role,
+    }));
 
-    if (existingUser) {
-      throw new ConflictException('Email already exists');
+    const roles = await this.roleRepository.find({ where: roless });
+    if (!roles) {
+      return 'This role is not Available';
     }
     if (updateUserDto.password !== updateUserDto.confirmPassword) {
       throw new BadRequestException('Passwords do not match');
@@ -74,7 +76,6 @@ export class UserService {
     updateUserDto.password = await bcrypt.hash(updateUserDto.password, 10);
     const { confirmPassword, role: roleIds, ...updateData } = updateUserDto;
     console.log(confirmPassword);
-    const roles = await this.roleRepository.findByIds(roleIds);
     const user = await this.usersRepository.findOneById(id);
     if (!user) {
       throw new NotFoundException('User not found');
@@ -111,19 +112,15 @@ export class UserService {
 
   async findOne(id: number): Promise<User> {
     try {
-      //  console.log(`Fetching user with id: ${id}`);
       const user = await this.usersRepository.findOne({
         where: { id },
         relations: ['roles', 'roles.permissions'],
       });
       if (!user) {
-        //    console.error('User not found');
         return null;
       }
-      //   console.log('Fetched user:', user);
       return user;
     } catch (error) {
-      //   console.error('Error fetching user:', error);
       throw error;
     }
   }

@@ -9,7 +9,6 @@ import {
 import { User } from '../../models/user/entities/user.entity';
 import { Permission } from 'src/models/permission/entities/permission.entity';
 import { Role } from 'src/models/role/entities/role.entity';
-//import { Action } from 'rxjs/internal/scheduler/Action';
 
 type Subjects =
   | InferSubjects<typeof User | typeof Role | typeof Permission>
@@ -41,7 +40,6 @@ export function defineAbilitiesFor(user: User) {
     user.roles.forEach((role) => {
       if (role.permissions) {
         role.permissions.forEach((permission) => {
-          // Assuming permission.model is a string that corresponds to an entity name
           let subject: Subjects;
           switch (permission.model) {
             case 'user':

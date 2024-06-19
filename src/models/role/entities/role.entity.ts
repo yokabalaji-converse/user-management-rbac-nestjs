@@ -16,9 +16,6 @@ export class Role {
   @Column({ default: 'user' })
   name: string;
 
-  // @ManyToMany(() => User, (user) => user.roles)
-  // users: User[];
-
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
