@@ -12,10 +12,11 @@ import { CreateRoleDto } from './dtos/create-role-dto';
 import { RoleService } from './role.service';
 import { PoliciesGuard } from 'src/common/abilities/policies.guard';
 import { CheckPolicies } from 'src/common/abilities/policies.decorator';
-import { AppAbility } from 'src/common/abilities/ability';
+import { Action, AppAbility } from 'src/common/abilities/ability';
 import { PermissionService } from 'src/models/permission/permission.service';
 import { UserService } from 'src/models/user/user.service';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
+import { Role } from './entities/role.entity';
 
 @Controller('role')
 @ApiTags('Role')
@@ -29,7 +30,7 @@ export class RoleController {
   @ApiSecurity('jwt-auth')
   @Post()
   @UseGuards(PoliciesGuard)
-  @CheckPolicies((ability: AppAbility) => ability.can('create', 'Role'))
+  @CheckPolicies((ability: AppAbility) => ability.can(Action.Create, Role))
   async createRoles(@Body() createRoledto: CreateRoleDto) {
     return await this.roleService.createRole(createRoledto);
   }

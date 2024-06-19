@@ -9,6 +9,7 @@ import {
 import { User } from '../../models/user/entities/user.entity';
 import { Permission } from 'src/models/permission/entities/permission.entity';
 import { Role } from 'src/models/role/entities/role.entity';
+//import { Action } from 'rxjs/internal/scheduler/Action';
 
 type Subjects =
   | InferSubjects<typeof User | typeof Role | typeof Permission>
@@ -19,7 +20,15 @@ type Subjects =
 
 console.log('ability class');
 
-export type AppAbility = PureAbility<[string, Subjects]>;
+export enum Action {
+  Manage = 'manage',
+  Create = 'create',
+  Read = 'read',
+  Update = 'update',
+  Delete = 'delete',
+}
+
+export type AppAbility = PureAbility<[Action, Subjects]>;
 
 export function defineAbilitiesFor(user: User) {
   const { can, cannot, build } = new AbilityBuilder(
@@ -27,7 +36,7 @@ export function defineAbilitiesFor(user: User) {
   );
 
   if (user && user.roles && user.roles.some((role) => role.name === 'admin')) {
-    can('manage', 'all'); // Admin can manage everything
+    can(Action.Manage, 'all'); // Admin can manage everything
   } else if (user && user.roles) {
     user.roles.forEach((role) => {
       if (role.permissions) {
@@ -48,7 +57,7 @@ export function defineAbilitiesFor(user: User) {
               console.log('model mistakes  ');
               throw new Error(`Unknown model: ${permission.model}`);
           }
-          can(permission.action, subject);
+          can(permission.action as Action, subject);
         });
       }
     });

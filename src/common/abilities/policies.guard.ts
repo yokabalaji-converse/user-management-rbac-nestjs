@@ -24,6 +24,7 @@ export class PoliciesGuard implements CanActivate {
     console.log('policy hanlder   ' + policyHandlers);
 
     const request = context.switchToHttp().getRequest();
+
     const users = request.user as User;
     console.log('User payload from request:   ', users);
     const user = await this.userService.findOne(users['userId']);
@@ -42,7 +43,10 @@ export class PoliciesGuard implements CanActivate {
     return result;
   }
 
-  private execPolicyHandler(handler: PolicyHandler, ability: AppAbility) {
+  private execPolicyHandler(
+    handler: PolicyHandler,
+    ability: AppAbility,
+  ): boolean {
     if (typeof handler === 'function') {
       const result = handler(ability);
       console.log('Policy handler function result:   ', result);
