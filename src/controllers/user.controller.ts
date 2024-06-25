@@ -8,10 +8,10 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { CreateUserDto } from '../data-transfer-objects/create-user-dtos';
+import { CreateUserDto } from '../dtos/create-user-dtos';
 import { UserService } from '../services/user.service';
-import { UpdateUserDto } from '../data-transfer-objects/update-user-dtos';
-import { Public } from 'src/config/common/decorators/public-decorator';
+import { UpdateUserDto } from '../dtos/update-user-dtos';
+import { Public } from 'src/decorators/public-decorator';
 import { RoleService } from 'src/services/role.service';
 import { PermissionService } from 'src/services/permission.service';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';

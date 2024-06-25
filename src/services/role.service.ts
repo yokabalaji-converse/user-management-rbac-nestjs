@@ -2,7 +2,7 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Role } from 'src/models/role.entity';
 import { Repository } from 'typeorm';
-import { CreateRoleDto } from '../data-transfer-objects/create-role-dto';
+import { CreateRoleDto } from '../dtos/create-role-dto';
 import { Permission } from 'src/models/permission.entity';
 
 @Injectable()

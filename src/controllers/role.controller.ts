@@ -8,11 +8,11 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { CreateRoleDto } from '../data-transfer-objects/create-role-dto';
+import { CreateRoleDto } from '../dtos/create-role-dto';
 import { RoleService } from '../services/role.service';
-import { PoliciesGuard } from 'src/config/common/guards/policies.guard';
-import { CheckPolicies } from '../config/common/decorators/policies.decorator';
-import { Action, AppAbility } from 'src/config/common/abilities/ability';
+import { PoliciesGuard } from 'src/guards/policies.guard';
+import { CheckPolicies } from '../decorators/policies.decorator';
+import { Action, AppAbility } from 'src/abilities/ability';
 import { PermissionService } from 'src/services/permission.service';
 import { UserService } from 'src/services/user.service';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';

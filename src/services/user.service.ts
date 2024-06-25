@@ -10,9 +10,9 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/models/user.entity';
 import { Repository } from 'typeorm';
-import { CreateUserDto } from '../data-transfer-objects/create-user-dtos';
+import { CreateUserDto } from '../dtos/create-user-dtos';
 import * as bcrypt from 'bcrypt';
-import { UpdateUserDto } from '../data-transfer-objects/update-user-dtos';
+import { UpdateUserDto } from '../dtos/update-user-dtos';
 import { Role } from 'src/models/role.entity';
 
 @Injectable()

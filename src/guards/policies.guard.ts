@@ -4,7 +4,7 @@ import { CaslAbilityFactory } from '../abilities/common-ability-schema-language-
 import { CHECK_POLICIES_KEY } from '../decorators/policies.decorator';
 import { PolicyHandler } from '../abilities/policy-handler.interface';
 import { AppAbility } from '../abilities/ability';
-import { User } from '../../../models/user.entity';
+import { User } from '../models/user.entity';
 import { UserService } from 'src/services/user.service';
 
 @Injectable()

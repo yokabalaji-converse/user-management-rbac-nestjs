@@ -4,11 +4,11 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { LoginDto } from '../data-transfer-objects/login-dtos';
+import { LoginDto } from '../dtos/login-dtos';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from 'src/models/user.entity';
-import { jwtConstants } from 'src/config/common/constants/jwtConstants';
+import { jwtConstants } from 'src/config/constants/jwtConstants';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { EmailService } from 'src/services/email.service';

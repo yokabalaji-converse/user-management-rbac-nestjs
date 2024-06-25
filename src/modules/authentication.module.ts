@@ -3,11 +3,11 @@ import { AuthenticationController } from '../controllers/authentication.controll
 import { AuthenticationService } from '../services/authentication.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/models/user.entity';
-import { jwtConstants } from 'src/config/common/constants/jwtConstants';
+import { jwtConstants } from 'src/config/constants/jwtConstants';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
-import { JwtStrategy } from 'src/config/common/stratigies/jwt.strategies';
-import { RtStrategy } from 'src/config/common/stratigies/refreshToken-strategies';
+import { JwtStrategy } from 'src/stratigies/jwt.strategies';
+import { RtStrategy } from 'src/stratigies/refreshToken-strategies';
 import { EmailModule } from 'src/modules/email.module';
 
 @Module({

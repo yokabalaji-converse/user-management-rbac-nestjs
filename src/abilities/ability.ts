@@ -6,7 +6,7 @@ import {
   PureAbility,
 } from '@casl/ability';
 
-import { User } from '../../../models/user.entity';
+import { User } from '../models/user.entity';
 import { Permission } from 'src/models/permission.entity';
 import { Role } from 'src/models/role.entity';
 

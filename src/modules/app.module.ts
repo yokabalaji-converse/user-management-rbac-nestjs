@@ -6,7 +6,7 @@ import { UserModule } from '../modules/user.module';
 import { User } from '../models/user.entity';
 import { AuthenticationModule } from './authentication.module';
 import { APP_GUARD } from '@nestjs/core';
-import { JwtAuthGuard } from '../config/common/guards/jwt-auth-guard';
+import { JwtAuthGuard } from '../guards/jwt-auth-guard';
 import { EmailModule } from './email.module';
 import { Role } from '../models/role.entity';
 import { Permission } from '../models/permission.entity';

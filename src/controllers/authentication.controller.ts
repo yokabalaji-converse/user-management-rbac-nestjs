@@ -1,10 +1,10 @@
 import { Body, Controller, Post, Query, UseGuards } from '@nestjs/common';
-import { LoginDto } from '../data-transfer-objects/login-dtos';
+import { LoginDto } from '../dtos/login-dtos';
 import { AuthenticationService } from '../services/authentication.service';
-import { Public } from 'src/config/common/decorators/public-decorator';
-import { RtAuthGuard } from 'src/config/common/guards/refreshToken-jwt-guard';
-import { GetCurrentUser } from 'src/config/common/decorators/refreshToken-get-current-user-deco';
-import { GetCurrentUserId } from 'src/config/common/decorators/refreshToken-get-current-userId-deco';
+import { Public } from 'src/decorators/public-decorator';
+import { RtAuthGuard } from 'src/guards/refreshToken-jwt-guard';
+import { GetCurrentUser } from 'src/decorators/refreshToken-get-current-user-deco';
+import { GetCurrentUserId } from 'src/decorators/refreshToken-get-current-userId-deco';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 
 @Controller('authentication')

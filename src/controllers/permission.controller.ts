@@ -8,8 +8,8 @@ import {
   Put,
 } from '@nestjs/common';
 import { PermissionService } from '../services/permission.service';
-import { CreatePermissionDto } from '../data-transfer-objects/create-permission-dto';
-import { UpdatePermissionDto } from '../data-transfer-objects/update-permission-dto';
+import { CreatePermissionDto } from '../dtos/create-permission-dto';
+import { UpdatePermissionDto } from '../dtos/update-permission-dto';
 import { RoleService } from 'src/services/role.service';
 import { UserService } from 'src/services/user.service';
 //import { Public } from 'src/decorators/public-decorator';
